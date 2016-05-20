@@ -1,6 +1,6 @@
 # SynchronousMessageSystem
 Synchronous message system for Windows Forms applications.
 
-#Installation
+##Installation
 
 `Install-Package SynchronousMessageSystem`
