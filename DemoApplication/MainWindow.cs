@@ -28,5 +28,11 @@ namespace DemoApplication
             using (var x = new DemoSpecifiedTargetFunctions())
                 x.ShowDialog(this);
         }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            using (var x = new DemoMutateReceiverList())
+                x.ShowDialog(this);
+        }
     }
 }

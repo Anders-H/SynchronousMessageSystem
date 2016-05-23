@@ -46,6 +46,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DemoMutateReceiverList.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DemoMutateReceiverList.Designer.cs">
+      <DependentUpon>DemoMutateReceiverList.cs</DependentUpon>
+    </Compile>
     <Compile Include="DemoSimpleMessageWithResponse.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -66,6 +72,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="DemoMutateReceiverList.resx">
+      <DependentUpon>DemoMutateReceiverList.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="DemoSimpleMessageWithResponse.resx">
       <DependentUpon>DemoSimpleMessageWithResponse.cs</DependentUpon>
     </EmbeddedResource>
