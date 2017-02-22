@@ -59,18 +59,46 @@ namespace SynchronousMessageSystem
                 //Deliver to all subscribing functions.
                 var delivered = false;
                 if (receiver.MatchList.Count > 0)
-                    for (var i = 0; i < receiver.MatchList.Count; i++)
-                        if (receiver.MatchList[i].IsMatch(message))
+                {
+                    //Any function may change the list, so a copy is needed.
+                    var ml = receiver.MatchList.ToArray();
+                    foreach (var t in ml)
+                        if (t.IsMatch(message))
                         {
-                            receiver.MatchList[i].RreceiveProcess(sender, receiver.MatchList[i], message);
+                            t.ReceiveProcess(sender, t, message);
                             delivered = true;
                         }
+                }
                 if (!delivered)
                     receiver.Other(sender, null, message);
             }
         }
 
+        internal void Talk(Actor sender, object message)
+        {
+            lock (Actors)
+            {
+                var delivered = false;
+                var al = Actors.ToArray();
+                foreach (var actor in al)
+                {
+                    if (actor.MatchList.Count <= 0)
+                        continue;
+                    var ml = actor.MatchList.ToArray();
+                    foreach (var t in ml)
+                        if (t.IsMatch(message))
+                        {
+                            t.ReceiveProcess(sender, t, message);
+                            delivered = true;
+                        }
+                }
+                if (!delivered)
+                    Undelivered.Add(new Envelope(sender, null, message));
+            }
+        }
         public Actor GetActor(Type actorType) => Actors.FirstOrDefault(x => x.GetType() == actorType);
-        public T GetActor<T>() where T : Actor => (T) Actors.FirstOrDefault(x => x.GetType() == typeof(T)); 
+        public IEnumerable<Actor> GetActors(Type actorType) => Actors.Where(x => x.GetType() == actorType);
+        public T GetActor<T>() where T : Actor => (T) Actors.FirstOrDefault(x => x.GetType() == typeof(T));
+        public IEnumerable<T> GetActors<T>() where T : Actor => (IEnumerable<T>) Actors.Where(x => x.GetType() == typeof(T));
     }
 }

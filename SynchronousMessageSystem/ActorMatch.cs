@@ -5,11 +5,11 @@ namespace SynchronousMessageSystem
     public class ActorMatch
     {
         public Type MessageType { get; }
-        public ReceiveProcess RreceiveProcess { get; }
+        public ReceiveProcess ReceiveProcess { get; }
         public ActorMatch(Type messageType, ReceiveProcess receiveProcess)
         {
             MessageType = messageType;
-            RreceiveProcess = receiveProcess;
+            ReceiveProcess = receiveProcess;
         }
         public bool IsMatch(object message) => MessageType == message.GetType();
     }

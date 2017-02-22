@@ -34,5 +34,11 @@ namespace DemoApplication
             using (var x = new DemoMutateReceiverList())
                 x.ShowDialog(this);
         }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            using (var x = new DemoMultipleReceivers())
+                x.ShowDialog(this);
+        }
     }
 }
