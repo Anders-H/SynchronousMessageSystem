@@ -22,5 +22,30 @@ namespace SynchronousMessageSystem
             ActorSystem.Undelivered.Add(new Envelope(this, receiverType, message));
         }
         public void Talk(object message) => ActorSystem.Talk(this, message);
+
+        internal ReceiveProcess GetReceiveProcess(string instanceMember)
+        {
+            var method = GetType().GetMethod(instanceMember);
+            if (method == null)
+                throw new MissingMethodException($@"Method ""{instanceMember}"" not found.");
+            var d = (ReceiveProcess)Delegate.CreateDelegate(typeof(ReceiveProcess), this, method);
+            if (d == null)
+                throw new SystemException($@"Method ""{instanceMember}"" is not of type ""ReceiveProcess"".");
+            return d;
+        }
+        internal ReceiveProcess TryGetReceiveProcess(string instanceMember)
+        {
+            var method = GetType().GetMethod(instanceMember);
+            if (method == null)
+                return null;
+            try
+            {
+                return (ReceiveProcess)Delegate.CreateDelegate(typeof(ReceiveProcess), this, method);
+            }
+            catch
+            {
+                return null;
+            }
+        }
     }
 }

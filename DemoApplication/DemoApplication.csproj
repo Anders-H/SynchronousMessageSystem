@@ -46,6 +46,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DemoCustomActorMatching.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DemoCustomActorMatching.Designer.cs">
+      <DependentUpon>DemoCustomActorMatching.cs</DependentUpon>
+    </Compile>
     <Compile Include="DemoMultipleReceivers.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -78,6 +84,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="DemoCustomActorMatching.resx">
+      <DependentUpon>DemoCustomActorMatching.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="DemoMultipleReceivers.resx">
       <DependentUpon>DemoMultipleReceivers.cs</DependentUpon>
     </EmbeddedResource>

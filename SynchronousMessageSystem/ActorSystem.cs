@@ -7,7 +7,7 @@ namespace SynchronousMessageSystem
     public class ActorSystem
     {
         private List<Actor> Actors { get; } = new List<Actor>();
-        internal EnvelopeList Undelivered { get; } = new EnvelopeList();
+        public EnvelopeList Undelivered { get; } = new EnvelopeList();
         public void AddActor(Actor actor)
         {
             actor.ActorSystem = this;
@@ -65,7 +65,10 @@ namespace SynchronousMessageSystem
                     foreach (var t in ml)
                         if (t.IsMatch(message))
                         {
-                            t.ReceiveProcess(sender, t, message);
+                            var receiveProcess = t.GetReceiveProcess(receiver);
+                            if (receiveProcess == null)
+                                continue;
+                            receiveProcess(sender, t, message);
                             delivered = true;
                         }
                 }
@@ -88,7 +91,10 @@ namespace SynchronousMessageSystem
                     foreach (var t in ml)
                         if (t.IsMatch(message))
                         {
-                            t.ReceiveProcess(sender, t, message);
+                            var receiveProcess = t.GetReceiveProcess(actor);
+                            if (receiveProcess == null)
+                                continue;
+                            receiveProcess(sender, t, message);
                             delivered = true;
                         }
                 }
@@ -100,5 +106,22 @@ namespace SynchronousMessageSystem
         public IEnumerable<Actor> GetActors(Type actorType) => Actors.Where(x => x.GetType() == actorType);
         public T GetActor<T>() where T : Actor => (T) Actors.FirstOrDefault(x => x.GetType() == typeof(T));
         public IEnumerable<T> GetActors<T>() where T : Actor => (IEnumerable<T>) Actors.Where(x => x.GetType() == typeof(T));
+        public int TalkToAll(ActorMatch actorMatch, object message) => TalkToAll(null, actorMatch, message);
+        public int TalkToAll(Actor sender, ActorMatch actorMatch, object message)
+        {
+            var matchCount = 0;
+            foreach (var actor in Actors)
+            {
+                if (!actorMatch.IsMatch(actor))
+                    continue;
+                var receiveProcess = actorMatch.GetReceiveProcess(actor);
+                if (receiveProcess == null)
+                    actor.Talk(message);
+                else
+                    receiveProcess(sender, actorMatch, message);
+                matchCount++;
+            }
+            return matchCount;
+        }
     }
 }
