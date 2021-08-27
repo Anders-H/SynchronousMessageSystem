@@ -6,35 +6,37 @@ namespace DemoApplication
 {
     public partial class DemoSimpleMessageWithResponse : Form
     {
-        // 1. Create the actor system.
-        private ActorSystem ActorSystem { get; } = new ActorSystem();
+        private ActorSystem ActorSystem { get; }
 
         public DemoSimpleMessageWithResponse()
         {
             InitializeComponent();
+            // 1. Create the actor system.
+            ActorSystem = new ActorSystem();
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
             // 3. Tell the first actor to talk to the second actor. You could keep a reference in the form.
-            ActorSystem.GetActor<Actor1a>().SendMessage();
+            ActorSystem.GetActor<Actor1A>().SendMessage();
         }
 
         private void DemoSimpleMessageWithResponse_Load(object sender, EventArgs e)
         {
             // 2. Create the actors.
-            ActorSystem.AddActor(new Actor1a());
-            ActorSystem.AddActor(new Actor2a());
+            ActorSystem.AddActor(new Actor1A());
+            ActorSystem.AddActor(new Actor2A());
         }
     }
 
-    public class Actor1a : Actor
+    public class Actor1A : Actor
     {
         public void SendMessage()
         {
             // 4. Greet actor 2.
-            Talk(typeof(Actor2a), "Hello!");
+            Talk(typeof(Actor2A), "Hello!");
         }
+
         public override void Other(Actor sender, ActorMatch address, object message)
         {
             // 6. Display response.
@@ -42,7 +44,7 @@ namespace DemoApplication
         }
     }
 
-    public class Actor2a : Actor
+    public class Actor2A : Actor
     {
         public override void Other(Actor sender, ActorMatch address, object message)
         {
