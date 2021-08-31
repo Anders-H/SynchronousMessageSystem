@@ -37,9 +37,9 @@ namespace DemoApplication
             this.button1.Location = new System.Drawing.Point(88, 76);
             this.button1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(88, 27);
+            this.button1.Size = new System.Drawing.Size(140, 27);
             this.button1.TabIndex = 1;
-            this.button1.Text = "Send";
+            this.button1.Text = "Send (click twice)";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 

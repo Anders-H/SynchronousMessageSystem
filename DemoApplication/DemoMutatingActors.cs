@@ -18,25 +18,54 @@ namespace DemoApplication
         private void DemoMutatingActors_Load(object sender, EventArgs e)
         {
             // 2. Create the actors.
-            ActorSystem.AddActor(new Actor1Fa());
-            ActorSystem.AddActor(new Actor2F());
+            ActorSystem.AddActor(new Actor1F("First Actor"));
+            ActorSystem.AddActor(new Actor2Fa("Second Actor"));
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
             // 3. Tell the first actor to talk to the second actor. You could keep a reference in the form.
-            ActorSystem.GetActor<Actor1F>()!.SendMessage();
+            ((Actor1F?)ActorSystem.GetActor("First Actor"))!.SendMessage();
         }
     }
 
-    public class Actor1Fa : Actor
+    public class Actor1F : Actor
     {
-        public Actor1Fa(string actorName) : base(actorName, null)
+        public Actor1F(string actorName) : base(actorName, null)
+        {
+        }
+
+        public void SendMessage()
+        {
+            // 4. Talk to aktor 2 by name.
+            Talk("Second Actor", "Hello!");
+        }
+
+        public override void Other(Actor sender, ActorMatch? address, object message)
+        {
+        }
+    }
+
+    public class Actor2Fa : Actor
+    {
+        public Actor2Fa(string actorName) : base(actorName, null)
         {
         }
 
         public override void Other(Actor sender, ActorMatch? address, object message)
         {
+            // 5. Confirm message and mutate.
+            MessageBox.Show("Yes, I got the message!");
+            Become(new Actor2Fb());
+        }
+    }
+
+    public class Actor2Fb : Actor
+    {
+        public override void Other(Actor sender, ActorMatch? address, object message)
+        {
+            // 6. The second time, this object will receive the message.
+            MessageBox.Show("Now I got the message!");
         }
     }
 }

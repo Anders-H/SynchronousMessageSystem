@@ -114,8 +114,15 @@ namespace SynchronousMessageSystem
                     Undelivered.Add(new Envelope(sender, null, message));
             }
         }
+
+        public Actor? GetActor(string actorName) =>
+            Actors.FirstOrDefault(x => x.ActorName == actorName);
+
         public Actor? GetActor(Type actorType) =>
             Actors.FirstOrDefault(x => x.GetType() == actorType);
+
+        public IEnumerable<Actor> GetActors(string actorName) =>
+            Actors.Where(x => x.ActorName == actorName);
 
         public IEnumerable<Actor> GetActors(Type actorType) =>
             Actors.Where(x => x.GetType() == actorType);
@@ -149,6 +156,22 @@ namespace SynchronousMessageSystem
             }
 
             return matchCount;
+        }
+
+        public bool Has(string actorName) =>
+            GetActor(actorName) != null;
+
+        public void DeleteFirst(string actorName)
+        {
+            var actor = GetActor(actorName);
+            if (actor != null)
+                Actors.Remove(actor);
+        }
+
+        public void DeleteAll(string actorName)
+        {
+            while (Has(actorName))
+                DeleteFirst(actorName);
         }
     }
 }

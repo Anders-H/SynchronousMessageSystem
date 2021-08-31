@@ -42,6 +42,23 @@ namespace SynchronousMessageSystem
             ActorSystem.Undelivered.Add(new Envelope(this, receiverType, message));
         }
 
+        public void Talk(string actorName, object message)
+        {
+            var receivers = ActorSystem!.GetActors(actorName);
+
+            var enumerable = receivers as Actor[] ?? receivers.ToArray();
+
+            if (enumerable.Any())
+            {
+                foreach (var receiver in enumerable)
+                    Talk(receiver, message);
+
+                return;
+            }
+
+            ActorSystem.Undelivered.Add(new Envelope(this, actorName, message));
+        }
+
         public void Talk(object message) =>
             ActorSystem!.Talk(this, message);
 
@@ -74,6 +91,22 @@ namespace SynchronousMessageSystem
             {
                 return null;
             }
+        }
+
+        public bool Become(Actor newObject)
+        {
+            if (string.IsNullOrWhiteSpace(ActorName))
+                throw new SystemException("Actor has no name.");
+
+            if (ActorSystem!.Has(ActorName))
+                ActorSystem!.DeleteAll(ActorName);
+            else
+                return false;
+
+            newObject.ActorName = ActorName;
+            newObject.ActorState = ActorState;
+            ActorSystem!.AddActor(newObject);
+            return true;
         }
     }
 }
