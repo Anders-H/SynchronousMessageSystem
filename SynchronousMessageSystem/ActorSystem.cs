@@ -22,7 +22,7 @@ namespace SynchronousMessageSystem
                 var toDeliver = new EnvelopeList();
                 toDeliver.AddRange(Undelivered);
                 Undelivered.Clear();
-                toDeliver.ForEach(x => Talk(x.Sender, GetActor(x.ReceiverType!)!, x.ReceiverType!, x.Message));
+                toDeliver.ForEach(x => Talk(x.Sender, GetActor(x.ActorAddress), x.ActorAddress, x.Message));
             }
         }
 
@@ -49,11 +49,11 @@ namespace SynchronousMessageSystem
             }
         }
 
-        internal void Talk(Actor sender, Actor receiver, Type receiverType, object message)
+        internal void Talk(Actor sender, Actor? receiver, ActorAddress receiverAddress, object message)
         {
             if (receiver == null)
             {
-                Undelivered.Add(new Envelope(sender, receiverType, message));
+                Undelivered.Add(new Envelope(sender, receiverAddress, message));
                 return;
             }
 
@@ -111,7 +111,7 @@ namespace SynchronousMessageSystem
                 }
 
                 if (!delivered)
-                    Undelivered.Add(new Envelope(sender, null, message));
+                    Undelivered.Add(new Envelope(sender, message));
             }
         }
 

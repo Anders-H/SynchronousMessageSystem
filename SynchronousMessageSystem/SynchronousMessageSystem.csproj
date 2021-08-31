@@ -3,6 +3,13 @@
 	<PropertyGroup>
 		<TargetFramework>net5.0</TargetFramework>
 		<Nullable>enable</Nullable>
+		<Version>1.0.4</Version>
+		<Company>WinSoft.se</Company>
+		<Description>Synchronous message system for Windows Forms applications.</Description>
+		<RepositoryUrl>https://github.com/Anders-H/SynchronousMessageSystem</RepositoryUrl>
+		<AssemblyVersion>1.0.4</AssemblyVersion>
+		<FileVersion>1.0.4</FileVersion>
+		<PackageReleaseNotes>Changed to .NET 5, added the ability for actors to mutate.</PackageReleaseNotes>
 	</PropertyGroup>
 
 </Project>
