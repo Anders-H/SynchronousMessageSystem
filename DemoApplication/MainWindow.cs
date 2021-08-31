@@ -39,5 +39,11 @@ namespace DemoApplication
             using var x = new DemoCustomActorMatching();
             x.ShowDialog(this);
         }
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+            using var x = new DemoMutatingActors();
+            x.ShowDialog(this);
+        }
     }
 }

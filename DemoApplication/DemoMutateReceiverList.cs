@@ -18,7 +18,7 @@ namespace DemoApplication
         private void button1_Click(object sender, EventArgs e)
         {
             // 5. Send a string to Actor2c. Click this button twice.
-            ActorSystem.GetActor<Actor1C>().SendMessage();
+            ActorSystem.GetActor<Actor1C>()!.SendMessage();
         }
 
         private void DemoMutateReceiverList_Load(object sender, EventArgs e)
@@ -35,7 +35,7 @@ namespace DemoApplication
                 Talk(typeof(Actor2C), "Hello!");
             }
 
-            public override void Other(Actor sender, ActorMatch address, object message)
+            public override void Other(Actor sender, ActorMatch? address, object message)
             {
             }
         }
@@ -61,7 +61,7 @@ namespace DemoApplication
                 MessageBox.Show((string)message, @"Second time");
             }
 
-            public override void Other(Actor sender, ActorMatch address, object message)
+            public override void Other(Actor sender, ActorMatch? address, object message)
             {
             }
         }

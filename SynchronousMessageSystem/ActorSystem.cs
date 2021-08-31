@@ -22,7 +22,7 @@ namespace SynchronousMessageSystem
                 var toDeliver = new EnvelopeList();
                 toDeliver.AddRange(Undelivered);
                 Undelivered.Clear();
-                toDeliver.ForEach(x => Talk(x.Sender, GetActor(x.ReceiverType), x.ReceiverType, x.Message));
+                toDeliver.ForEach(x => Talk(x.Sender, GetActor(x.ReceiverType!)!, x.ReceiverType!, x.Message));
             }
         }
 
@@ -114,14 +114,14 @@ namespace SynchronousMessageSystem
                     Undelivered.Add(new Envelope(sender, null, message));
             }
         }
-        public Actor GetActor(Type actorType) =>
+        public Actor? GetActor(Type actorType) =>
             Actors.FirstOrDefault(x => x.GetType() == actorType);
 
         public IEnumerable<Actor> GetActors(Type actorType) =>
             Actors.Where(x => x.GetType() == actorType);
 
-        public T GetActor<T>() where T : Actor =>
-            (T)Actors.FirstOrDefault(x => x.GetType() == typeof(T));
+        public T? GetActor<T>() where T : Actor =>
+            (T)Actors.FirstOrDefault(x => x.GetType() == typeof(T))!;
 
         public IEnumerable<T> GetActors<T>() where T : Actor =>
             (IEnumerable<T>)Actors.Where(x => x.GetType() == typeof(T));
@@ -129,7 +129,7 @@ namespace SynchronousMessageSystem
         public int TalkToAll(ActorMatch actorMatch, object message) =>
             TalkToAll(null, actorMatch, message);
 
-        public int TalkToAll(Actor sender, ActorMatch actorMatch, object message)
+        public int TalkToAll(Actor? sender, ActorMatch actorMatch, object message)
         {
             var matchCount = 0;
 
@@ -143,7 +143,7 @@ namespace SynchronousMessageSystem
                 if (receiveProcess == null)
                     actor.Talk(message);
                 else
-                    receiveProcess(sender, actorMatch, message);
+                    receiveProcess(sender!, actorMatch, message);
 
                 matchCount++;
             }

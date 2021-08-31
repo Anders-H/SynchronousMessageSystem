@@ -4,16 +4,16 @@ namespace SynchronousMessageSystem
 {
     public class ActorMatch
     {
-        private readonly ReceiveProcess _receiveProcess;
-        private readonly string _receiveProcessName;
-        public Type MessageType { get; }
+        private readonly ReceiveProcess? _receiveProcess;
+        private readonly string? _receiveProcessName;
+        public Type? MessageType { get; }
 
-        public ReceiveProcess GetReceiveProcess(Actor actor)
+        public ReceiveProcess? GetReceiveProcess(Actor actor)
         {
             if (_receiveProcess != null)
                 return _receiveProcess;
 
-            ReceiveProcess r = null;
+            ReceiveProcess? r = null;
             
             if (!string.IsNullOrEmpty(_receiveProcessName))
                 r = actor.TryGetReceiveProcess(_receiveProcessName);
@@ -32,7 +32,7 @@ namespace SynchronousMessageSystem
             _receiveProcess = receiveProcess;
         }
 
-        public ActorMatch(Type messageType, string receiveProcess)
+        public ActorMatch(Type? messageType, string receiveProcess)
         {
             MessageType = messageType;
             _receiveProcessName = receiveProcess;

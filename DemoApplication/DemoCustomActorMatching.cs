@@ -7,21 +7,14 @@ namespace DemoApplication
     public partial class DemoCustomActorMatching : Form
     {
         private ActorSystem ActorSystem { get; }
-        private CustomActorMatch MatchIfValueIsOne { get; set; }
-        private CustomActorMatch MatchIfValueIsTwo { get; set; }
+        private CustomActorMatch? MatchIfValueIsOne { get; set; }
+        private CustomActorMatch? MatchIfValueIsTwo { get; set; }
 
         public DemoCustomActorMatching()
         {
             InitializeComponent();
             // 1. Create the actor system.
             ActorSystem = new ActorSystem();
-        }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-            // 5. Talk to all who matches the criteria.
-            ActorSystem.TalkToAll(MatchIfValueIsOne, "One"); // Hits both receivers.
-            ActorSystem.TalkToAll(MatchIfValueIsTwo, "Two"); // Hits only the second receiver.
         }
 
         private void DemoCustomActorMatching_Load(object sender, EventArgs e)
@@ -37,6 +30,13 @@ namespace DemoApplication
             // 4. Add actors to actorsystem.
             ActorSystem.AddActor(hasOne);
             ActorSystem.AddActor(hasTwo);
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            // 5. Talk to all who matches the criteria.
+            ActorSystem.TalkToAll(MatchIfValueIsOne!, "One"); // Hits both receivers.
+            ActorSystem.TalkToAll(MatchIfValueIsTwo!, "Two"); // Hits only the second receiver.
         }
     }
 
@@ -62,7 +62,7 @@ namespace DemoApplication
             Value = value;
         }
 
-        public override void Other(Actor sender, ActorMatch address, object message)
+        public override void Other(Actor sender, ActorMatch? address, object message)
         {
         }
 

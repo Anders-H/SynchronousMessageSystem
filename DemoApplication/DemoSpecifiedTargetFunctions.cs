@@ -18,7 +18,7 @@ namespace DemoApplication
         private void button1_Click(object sender, EventArgs e)
         {
             // 3. Tell the first actor to talk to the second actor. You could keep a reference in the form.
-            ActorSystem.GetActor<Actor1B>().SendMessage();
+            ActorSystem.GetActor<Actor1B>()!.SendMessage();
         }
 
         private void DemoSpecifiedTargetFunctions_Load(object sender, EventArgs e)
@@ -38,7 +38,7 @@ namespace DemoApplication
             Talk(typeof(Actor2B), 55);
         }
 
-        public override void Other(Actor sender, ActorMatch address, object message)
+        public override void Other(Actor sender, ActorMatch? address, object message)
         {
         }
     }
@@ -59,7 +59,7 @@ namespace DemoApplication
         public void I_accept_ints(Actor sender, ActorMatch address, object message) =>
             MessageBox.Show(((int)message).ToString(), @"Got an int");
 
-        public override void Other(Actor sender, ActorMatch address, object message)
+        public override void Other(Actor sender, ActorMatch? address, object message)
         {
         }
     }

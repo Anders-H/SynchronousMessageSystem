@@ -26,7 +26,7 @@ namespace DemoApplication
         private void button1_Click(object sender, EventArgs e)
         {
             // 5. Send a string to Actor2d.
-            ActorSystem.GetActor<Actor1D>().SendMessage();
+            ActorSystem.GetActor<Actor1D>()!.SendMessage();
         }
     }
 
@@ -37,7 +37,7 @@ namespace DemoApplication
             Talk("Hello!");
         }
 
-        public override void Other(Actor sender, ActorMatch address, object message)
+        public override void Other(Actor sender, ActorMatch? address, object message)
         {
         }
     }
@@ -51,7 +51,7 @@ namespace DemoApplication
             MatchList.Add(new ActorMatch(typeof(string), StringReceiver2));
         }
 
-        public override void Other(Actor sender, ActorMatch address, object message)
+        public override void Other(Actor sender, ActorMatch? address, object message)
         {
         }
 
@@ -74,7 +74,7 @@ namespace DemoApplication
             MatchList.Add(new ActorMatch(typeof(string), StringReceiver));
         }
 
-        public override void Other(Actor sender, ActorMatch address, object message)
+        public override void Other(Actor sender, ActorMatch? address, object message)
         {
         }
 
