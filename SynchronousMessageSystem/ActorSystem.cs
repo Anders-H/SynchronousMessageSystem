@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 
 namespace SynchronousMessageSystem
 {
@@ -22,7 +23,11 @@ namespace SynchronousMessageSystem
                 var toDeliver = new EnvelopeList();
                 toDeliver.AddRange(Undelivered);
                 Undelivered.Clear();
-                toDeliver.ForEach(x => Talk(x.Sender, GetActor(x.ActorAddress), x.ActorAddress, x.Message));
+                foreach (Envelope env in toDeliver)
+                {
+                    if (env.IsActorAddressUsable)
+                        Talk(env.Sender, null, env.ActorAddress!, env.Message);
+                }
             }
         }
 
@@ -53,7 +58,8 @@ namespace SynchronousMessageSystem
         {
             if (receiver == null)
             {
-                Undelivered.Add(new Envelope(sender, receiverAddress, message));
+                if (receiver!.GetAddress().IsUsable)
+                    Undelivered.Add(new Envelope(sender, receiverAddress, message));
                 return;
             }
 

@@ -55,7 +55,7 @@ namespace DemoApplication
         public override void Other(Actor sender, ActorMatch? address, object message)
         {
             // 5. Confirm message and mutate.
-            MessageBox.Show("Yes, I got the message!");
+            MessageBox.Show(@"Yes, I got the message!");
             Become(new Actor2Fb());
         }
     }
@@ -65,7 +65,7 @@ namespace DemoApplication
         public override void Other(Actor sender, ActorMatch? address, object message)
         {
             // 6. The second time, this object will receive the message.
-            MessageBox.Show("Now I got the message!");
+            MessageBox.Show(@"Now I got the message!");
         }
     }
 }

@@ -22,8 +22,18 @@ namespace SynchronousMessageSystem
             ActorState = actorState;
         }
 
+        public ActorAddress GetAddress() =>
+            string.IsNullOrEmpty(ActorName)
+                ? new ActorAddress(GetType())
+                : new ActorAddress(GetType(), ActorName);
+
         public void Talk(Actor receiver, object message) =>
-            ActorSystem!.Talk(this, receiver, receiver.GetType(), message);
+            ActorSystem!.Talk(
+                this, // Who is talking?
+                receiver, // Talking to who?
+                receiver.GetAddress(), // If object does not exist, try to figure out the address for later use.
+                message // What is being said?
+            );
         
         public void Talk(Type receiverType, object message)
         {

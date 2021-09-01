@@ -7,6 +7,12 @@ namespace SynchronousMessageSystem
         public Type? ReceiverType { get; }
         public string? ReceiverName { get; }
 
+        public ActorAddress()
+        {
+            ReceiverType = null;
+            ReceiverName = null;
+        }
+
         public ActorAddress(Type receiverType)
         {
             ReceiverType = receiverType;
@@ -24,5 +30,8 @@ namespace SynchronousMessageSystem
             ReceiverType = receiverType;
             ReceiverName = receiverName;
         }
+
+        public bool IsUsable =>
+            !(ReceiverType == null && string.IsNullOrEmpty(ReceiverName));
     }
 }

@@ -42,5 +42,8 @@ namespace SynchronousMessageSystem
             ActorAddress = actorAddress;
             Message = message;
         }
+
+        public bool IsActorAddressUsable =>
+            ActorAddress?.IsUsable ?? false;
     }
 }
