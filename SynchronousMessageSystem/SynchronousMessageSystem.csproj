@@ -1,15 +1,31 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFramework>net5.0</TargetFramework>
+		<TargetFramework>net8.0</TargetFramework>
 		<Nullable>enable</Nullable>
-		<Version>1.0.4</Version>
+		<Version>1.1.0</Version>
 		<Company>WinSoft.se</Company>
 		<Description>Synchronous message system for Windows Forms applications.</Description>
 		<RepositoryUrl>https://github.com/Anders-H/SynchronousMessageSystem</RepositoryUrl>
-		<AssemblyVersion>1.0.4</AssemblyVersion>
-		<FileVersion>1.0.4</FileVersion>
-		<PackageReleaseNotes>Changed to .NET 5, added the ability for actors to mutate.</PackageReleaseNotes>
+		<AssemblyVersion>1.1.0</AssemblyVersion>
+		<FileVersion>1.1.0</FileVersion>
+		<PackageReleaseNotes>Changed to .NET 8, updated code accordingly.</PackageReleaseNotes>
+		<PackageReadmeFile>README.md</PackageReadmeFile>
+		<PackageIcon>nugeticon.png</PackageIcon>
+		<PackageProjectUrl>https://github.com/Anders-H/SynchronousMessageSystem</PackageProjectUrl>
+		<PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
+		<PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
 	</PropertyGroup>
+
+	<ItemGroup>
+	  <None Include="..\nugeticon.png">
+	    <Pack>True</Pack>
+	    <PackagePath>\</PackagePath>
+	  </None>
+	  <None Include="..\README.md">
+	    <Pack>True</Pack>
+	    <PackagePath>\</PackagePath>
+	  </None>
+	</ItemGroup>
 
 </Project>

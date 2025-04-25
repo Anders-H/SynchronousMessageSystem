@@ -17,6 +17,7 @@ nuget.exe
 *k10.csproj
 *.psess
 *.vsp
+*.vs
 *.pidb
 *.userprefs
 *DS_Store

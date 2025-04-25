@@ -1,18 +1,14 @@
-﻿using System.ComponentModel.Design;
+﻿namespace SynchronousMessageSystem;
 
-namespace SynchronousMessageSystem
+public static class ActorExtensions
 {
-    public static class ActorExtensions
+    public static ActorAddress GetAddress(this Actor? me)
     {
-        public static ActorAddress GetAddress(this Actor? me)
-        {
-            if (me == null)
-                return new ActorAddress();
+        if (me == null)
+            return new ActorAddress();
 
-            if (string.IsNullOrEmpty(me.ActorName))
-                return new ActorAddress(me.GetType());
-
-            return new ActorAddress(me.GetType(), me.ActorName!);
-        }
+        return string.IsNullOrEmpty(me.ActorName)
+            ? new ActorAddress(me.GetType())
+            : new ActorAddress(me.GetType(), me.ActorName!);
     }
 }

@@ -1,8 +1,7 @@
 ﻿using System.Collections.Generic;
 
-namespace SynchronousMessageSystem
+namespace SynchronousMessageSystem;
+
+public class ActorMatchList : List<ActorMatch>
 {
-    public class ActorMatchList : List<ActorMatch>
-    {
-    }
 }
